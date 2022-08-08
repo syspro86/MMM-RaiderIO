@@ -153,6 +153,7 @@ Module.register("MMM-RaiderIO", {
 
         Promise.all(getCharArr).then((values) => {
             self.processResponse(values);
+            self.scheduleUpdate();
         }, (err) => {
             retry = false;
             
@@ -164,6 +165,8 @@ Module.register("MMM-RaiderIO", {
             }
             if (retry) {
                 self.scheduleUpdate(self.loaded ? -1 : self.config.retryDelay);
+            } else {
+                self.scheduleUpdate();
             }
         });
     },
